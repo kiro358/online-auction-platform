@@ -1,0 +1,228 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: rgb(255, 255, 255);
+            background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(223, 223, 255, 1) 29%, rgba(232, 251, 255, 1) 90%);
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            overflow: hidden;
+            display: flex;
+            justify-content: left;
+            padding: 30px;
+            color: white;
+            z-index: 1;
+        }
+
+
+        .alink {
+            color: white;
+        }
+
+        a:hover {
+            color: black;
+            background-color: mintcream;
+        }
+
+        .dropdown-form {
+            max-width: 300px;
+            position: fixed;
+            top: 120px; /* Adjusted top position to be under the navbar */
+            left: 10%; /* Adjusted left position */
+            transform: translateX(-50%);
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: linear-gradient(to right, #a0eaf2, #389cf9);
+            animation: gradientChange 2s infinite alternate;
+            z-index: 1;
+        }
+
+        @keyframes gradientChange {
+            from {
+                background-position: 0%;
+            }
+            to {
+                background-position: 100%;
+            }
+        }
+
+
+        .grid-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+            position: relative;
+            top: 135px;
+            z-index: 0;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .grid-container:hover {
+            transform: scale(1.05);
+        }
+
+        .listing {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: column; /* Keep this line only if you want each listing to be a column */
+            padding: 5px;
+            background-color: #fff7f7;
+            border-radius: 8px;
+            transition: background-color 0.5s, transform 0.3s ease-in-out;
+            border: 1px solid #ccc;
+            width: 300px; /* Set a fixed width for each listing */
+        }
+
+        .listing:hover {
+            background-color: mintcream;
+            transform: scale(1.05);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .listing img {
+            width: 100%; /* Make the image take up 100% of its container width */
+            height: 150px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .listing-details {
+            text-align: center;
+            flex-grow: 1; /* Allow the details to grow and take up available space */
+        }
+
+        .createListing {
+            padding: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form label,
+        form input,
+        form textarea,
+        form select {
+            margin-bottom: 10px;
+        }
+
+        form input,
+        form textarea,
+        form select {
+            padding: 8px;
+        }
+
+        .button-container {
+            position: relative;
+            top: 75px;
+            display: flex;
+            justify-content: space-around;
+            padding: 5px; /* Adjust padding as needed */
+            background-color: #333; /* Background color for the button container */
+            color: white;
+            z-index: 2; /* Ensure the buttons are above other elements */
+        }
+
+        .button-container a {
+            text-decoration: none;
+            color: white;
+            padding: 8px; /* Adjust padding for the buttons */
+            font-size: 14px; /* Adjust font size for the buttons */
+        }
+    </style>
+
+    <div class="button-container">
+        <a href="{{ url_for('lostAuction') }}">
+            <button class="listing">
+                <div class="listing-details">
+                    <p>Lost Auction Confirmation</p>
+                </div>
+            </button>
+        </a>
+        <a href="{{ url_for('wonAuction') }}">
+            <button class="listing">
+                <div class="listing-details">
+                    <p>Won Auction Confirmation</p>
+                </div>
+            </button>
+        </a>
+    </div>
+
+    <div class="grid-container">
+
+        {% if bids %}
+            <ul>
+                {% for bid in bids %}
+                    <li>
+                        <a style="display:block" href="{{ url_for('productListing', product_id=bid.listing.id) }}">
+                            <div class="listing">
+                                {% if bid.listing.image %}
+                                    <img src="{{ url_for('static', filename=bid.listing.image.decode('utf-8').replace('static/', '')) }}"
+                                         alt="Listing Image" style="max-width: 300px; max-height: 300px;">
+                                {% endif %}
+                                <div class="listing-details">
+                                    <h3>{{ bid.listing.title }}</h3>
+                                    <p>{{ bid.listing.description }}</p>
+                                    <p>Starting Price: ${{ bid.listing.starting_price }}</p>
+                                    <p>Your Bid: ${{ bid.asking_price }}</p>
+                                    <p>Auction Duration: {{ bid.listing.auction_duration }} days</p>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No bids found for this user.</p>
+        {% endif %}
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(function () {
+                var floatingMessage = document.getElementById('floatingMessage');
+                var redirectButton = document.getElementById('redirectButton');
+
+                floatingMessage.classList.add('show-message');
+
+                setTimeout(function () {
+                    floatingMessage.classList.remove('show-message');
+                    redirectButton.style.display = 'inline-block';
+                }, 3000); // Hide message and show button after 4 seconds
+            }, 400); // Show message after .4 seconds
+
+            {% if session['user'] %}
+                var loginTime = new Date('{{ session["login_time"] }}');
+
+                function updateLoginDuration() {
+                    var currentTime = new Date();
+                    var duration = currentTime - loginTime;
+                    var hours = Math.floor(duration / (60 * 60 * 1000));
+                    var minutes = Math.floor((duration % (60 * 60 * 1000)) / (60 * 1000));
+                    var seconds = Math.floor((duration % (60 * 1000)) / 1000);
+
+                    var loginDurationElement = document.getElementById('login-duration');
+                    loginDurationElement.textContent = 'Logged in for: ' + hours + 'h ' + minutes + 'm ' + seconds + 's';
+                }
+
+                updateLoginDuration(); // Call once on page load
+                setInterval(updateLoginDuration, 1000); // Update every second
+            {% endif %}
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,245 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ product.title }}</title>
+        <style>
+            body {
+                margin: 0;
+                font-family: 'Arial', sans-serif;
+            }
+
+            .content {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+
+            .item-container {
+                position: absolute;
+                top: 60%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #fff;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                width: 40%; /* Adjusted width */
+                max-width: 400px; /* Adjusted max-width */
+                text-align: center;
+                transition: box-shadow 0.5s ease-in;
+            }
+
+            .item-container:hover {
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .item-header h1 {
+                color: #333;
+            }
+
+            .item-description h3,
+            .current-bid h3,
+            .time-left h3,
+            .photos-section h3 {
+                color: #555;
+                margin-bottom: 10px;
+            }
+
+            .current-bid p {
+                color: #e44d26;
+                font-weight: bold;
+                font-size: 1.2rem;
+            }
+
+            .photos-section img {
+                border-radius: 8px;
+                margin-top: 10px;
+                max-width: 250px;
+                max-height: 200px;
+            }
+
+            .bid-form {
+                margin-top: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .bid-input {
+                margin-bottom: 10px;
+                padding: 8px;
+                border: 1px solid #333;
+                border-radius: 4px;
+                width: 80%;
+            }
+
+            .submit-bid-btn {
+                background-color: deepskyblue;
+                color: #fff;
+                padding: 10px;
+                border: #bc3908;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s ease-in-out;
+            }
+
+            .submit-bid-btn:hover {
+                background-color: #002244;
+            }
+
+            .error{
+                color : red;
+                font-size: small;
+            }
+        </style>
+    </head>
+
+    <body>
+    <div class="navbar">
+        <h1>Online Auction App</h1>
+
+        <a href="{{ url_for('index') }}" style="background-color: #4CAF50;">Head To App Home Page!</a>
+        {% if session['user'] == null %}
+            <a href="{{ url_for('signin') }}" style="background-color: #008CBA;">Sign In</a>
+            <a href="{{ url_for('signup') }}" style="background-color: #f44336;">Sign Up</a>
+        {% else %}
+            <a href="{{ url_for('user', username = session['user']) }}"
+               style="background-color: #5CAF50;">User: {{ session['user'] }}</a>
+            <a href="{{ url_for('listing') }} " class="alink">View All Listings</a> |
+            <a href="{{ url_for('user_bids') }}" class="alink">Check My Bids!</a> |
+            <a href="{{ url_for('user_listings') }}" class="alink">Check My Listings!</a> |
+
+            <a href="{{ url_for('createListing') }}" class="alink">Create A New Listing!</a>
+
+            <a href="{{ url_for('logout') }}" style="background-color: #018CBA;">Logout</a>
+
+        {% endif %}
+    </div>
+    <div class="content">
+        <div class="item-container">
+            <div class="item-header">
+                <h1>{{ product.title }}</h1>
+            </div>
+            <div class="item-description">
+                <h3>Description</h3>
+                <p>{{ product.description }}</p>
+            </div>
+            <div class="current-bid">
+                <h3>Current Bid</h3>
+                <p>${{ top_bid.asking_price }}</p>
+            </div>
+            <div class="photos-section">
+                <h3>Photos</h3>
+                <img src="{{ url_for('static', filename=product.image.decode('utf-8').replace('static/', '')) }}"
+                     alt="Item Photo">
+                <!-- Add more images if needed -->
+            </div>
+
+            <div class="time-left">
+                <h3>Time Left</h3>
+                <p class="time-left1" data-end-time="{{ product.end_time }}">{{ product.end_time | calculate_timeleft(current_datetime) }}</p>
+            </div>
+
+            <form method="POST" enctype="multipart/form-data" class="bid-form">
+                <label for="bid-amount">Place Bid:</label>
+                <input type="number" id="bid-amount" name="bid-amount" class="bid-input" placeholder="Enter bid amount" required />
+                <button type="submit" class="submit-bid-btn" onclick="playChime()">Submit Bid</button>
+            </form>
+
+            {% if error %}
+                <h1 class = "error">{{ error }}!</h1>
+            {% endif %}
+
+            <a href="{{ url_for('listing') }}" class="back-link">Back to Item List</a>
+        </div>
+    </div>
+
+    <script>
+        function playChime() {
+            // Add your chime sound file path
+            var audio = new Audio('/static/audio/chime.mp3');
+            audio.play();
+        }
+    </script>
+
+    <script>
+        function updateTimer() {
+            // Get all elements with the class 'time-left'
+            var timeLeftElements = document.getElementsByClassName('time-left1');
+            
+            // Loop through each element and update the time
+            for (var i = 0; i < timeLeftElements.length; i++) {
+                var currentTime = new Date();
+                var endTime = new Date(timeLeftElements[i].getAttribute('data-end-time'));
+                var timeLeft = Math.max(endTime - currentTime, 0); // Ensure time doesn't go negative
+                
+                var days = Math.floor(timeLeft / (24 * 60 * 60 * 1000));
+                var hours = Math.floor((timeLeft % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+                var minutes = Math.floor((timeLeft % (60 * 60 * 1000)) / (60 * 1000));
+                var seconds = Math.floor((timeLeft % (60 * 1000)) / 1000);
+                
+                // Update the time on the element
+                if (timeLeft==0){
+                    timeLeftElements[i].textContent = `The Auction is Over`;
+                }
+                
+                else if (days!=0){
+                    timeLeftElements[i].textContent = `Time Left: ${days}D ${hours}h ${minutes}m ${seconds}s`;
+                }
+                    
+                else if (hours!=0){
+                    timeLeftElements[i].textContent = `Time Left: ${hours}h ${minutes}m ${seconds}s`;
+                }
+                else{
+                    timeLeftElements[i].textContent = `Time Left: ${minutes}m ${seconds}s`;
+                }  
+            }
+        }
+        updateTimer();
+        setInterval(updateTimer, 1000);
+        </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(function () {
+                var floatingMessage = document.getElementById('floatingMessage');
+                var redirectButton = document.getElementById('redirectButton');
+
+                floatingMessage.classList.add('show-message');
+
+                setTimeout(function () {
+                    floatingMessage.classList.remove('show-message');
+                    redirectButton.style.display = 'inline-block';
+                }, 3000); // Hide message and show button after 4 seconds
+            }, 400); // Show message after .4 seconds
+
+            {% if session['user'] %}
+                var loginTime = new Date('{{ session["login_time"] }}');
+
+                function updateLoginDuration() {
+                    var currentTime = new Date();
+                    var duration = currentTime - loginTime;
+                    var hours = Math.floor(duration / (60 * 60 * 1000));
+                    var minutes = Math.floor((duration % (60 * 60 * 1000)) / (60 * 1000));
+                    var seconds = Math.floor((duration % (60 * 1000)) / 1000);
+
+                    var loginDurationElement = document.getElementById('login-duration');
+                    loginDurationElement.textContent = 'Logged in for: ' + hours + 'h ' + minutes + 'm ' + seconds + 's';
+                }
+
+                updateLoginDuration(); // Call once on page load
+                setInterval(updateLoginDuration, 1000); // Update every second
+            {% endif %}
+        });
+    </script>
+    </body>
+    </html>
+
+{% endblock %}

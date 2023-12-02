@@ -1,0 +1,192 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: rgb(255, 255, 255);
+            background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(223, 244, 255, 1) 47%, rgba(232, 233, 255, 1) 90%);
+            overflow: hidden;
+        }
+
+        .content {
+            text-align: center;
+            padding: 100px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 48px;
+        }
+
+        p {
+            color: #555;
+            font-size: 20px;
+        }
+
+        .image-container {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .floating-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f8f8f8;
+            color: #002244;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 34px;
+            display: none; /* Start with display none for initial state */
+        }
+
+        .show-message {
+            display: block; /* Show the message */
+        }
+
+        .redirect-button-container {
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .redirect-button {
+            display: none; /* Hide the button initially */
+            padding: 10px 20px;
+            background-color: #008CBA;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 45px;
+        }
+
+        .view-listings-button {
+            background-color: #004466;
+            padding: 10px 20px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 45px;
+        }
+
+        .redirect-button:hover {
+            background-color: #002244;
+        }
+
+        .show-welcome .redirect-button {
+            display: none;
+        }
+
+        .curtain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f8f8f8;
+            z-index: 999;
+            animation: curtainFadeOut 3s forwards;
+            display: none;
+        }
+
+        @keyframes curtainFadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+                display: none;
+            }
+        }
+
+        .curtain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f8f8f8;
+    z-index: 999;
+    animation: curtainFadeOut 3s forwards;
+}
+
+.show-curtain {
+    animation: curtainFadeIn 3s forwards;
+}
+
+        @keyframes curtainFadeIn {
+            from {
+                opacity: 0;
+                display: block;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+
+    <div class="content">
+        <div id="curtain" class="curtain"></div>
+
+        <div class="floating-message" id="floatingMessage">
+            Welcome to Online Auction Web App!<br>
+            Created as a part of the course project for CPS714.
+        </div>
+
+        <div class="redirect-button-container">
+            <a href="{{ url_for('listing') }}" class="redirect-button" id="redirectButton">View Active Listings!</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(function () {
+                var floatingMessage = document.getElementById('floatingMessage');
+                var redirectButton = document.getElementById('redirectButton');
+
+                floatingMessage.classList.add('show-message');
+
+                setTimeout(function () {
+                    floatingMessage.classList.remove('show-message');
+                    redirectButton.style.display = 'inline-block';
+                }, 3000); // Hide message and show button after 4 seconds
+            }, 400); // Show message after .4 seconds
+
+            {% if session['user'] %}
+                var loginTime = new Date('{{ session["login_time"] }}');
+
+                function updateLoginDuration() {
+                    var currentTime = new Date();
+                    var duration = currentTime - loginTime;
+                    var hours = Math.floor(duration / (60 * 60 * 1000));
+                    var minutes = Math.floor((duration % (60 * 60 * 1000)) / (60 * 1000));
+                    var seconds = Math.floor((duration % (60 * 1000)) / 1000);
+
+                    var loginDurationElement = document.getElementById('login-duration');
+                    loginDurationElement.textContent = 'Logged in for: ' + hours + 'h ' + minutes + 'm ' + seconds + 's';
+                }
+
+                updateLoginDuration(); // Call once on page load
+                setInterval(updateLoginDuration, 1000); // Update every second
+            {% endif %}
+
+            redirectButton.addEventListener('click', function () {
+                var content = document.querySelector('.content');
+                content.classList.toggle('show-welcome', !content.classList.contains('show-welcome'));
+            });
+
+        });
+
+    </script>
+{% endblock %}

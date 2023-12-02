@@ -1,0 +1,86 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('{{ url_for('static', filename='images/background.jpg') }}'); /* Replace with your image path */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            margin: 0;
+            display: flex;
+            justify-content: flex-end; /* Align to the right */
+            height: 100vh; /* Make sure it takes the full viewport height */
+        }
+
+        .signup-container {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 25%; /* Set to occupy 35% of screen size */
+            opacity: 1;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+        }
+
+        h1 {
+            color: #4CAF50;
+            font-size: 24px;
+        }
+
+        label {
+            color: #fff;
+            font-size: 16px;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #003366;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #002244;
+        }
+    </style>
+
+    <div class="signup-container">
+        {% if success == Null %}
+            <h1>Sign Up</h1>
+            <form method="post">
+                <input type="username" name="username" placeholder="Username"><br>
+                <input type="password" name="password" placeholder="Password"><br>
+                <input type="text" name="first_name" placeholder="First Name"><br>
+                <input type="text" name="last_name" placeholder="Last Name"><br>
+                <input type="text" name="address" placeholder="Address"><br>
+                <input type="email" name="email" placeholder="Email"><br>
+                <input type="submit" value="Sign Me Up!">
+            </form>
+            {% if error %}
+                <h1>{{ error }}!</h1>
+            {% endif %}
+        {% else %}
+            <h1> User created successfully! </h1>
+            <h1> Confirmation email sent to registered Email address. </h1>
+            <h1> Redirecting to Sign-In Page... </h1>
+        {% endif %}
+    </div>
+{% endblock %}

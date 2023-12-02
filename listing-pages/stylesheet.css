@@ -1,0 +1,69 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F6BE00;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: darkred;
+    color: white;
+    /* border: 3px solid white; */
+    padding: 20px;
+    text-align: left;
+}
+
+a {
+    color: white;
+}
+
+a:hover {
+    color: black;
+    background-color: #F6BE00;
+}
+
+.grid-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    overflow-x: auto;
+}
+
+.listing {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Adjust spacing between image and text */
+    padding: 30px; 
+}
+
+.listing img {
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+    order: 1;
+}
+
+.listing div {
+    display: flex;
+    flex-direction: column; /* Places text content in a column */
+}
+
+.createListing {
+    padding: 20px; /* Add padding to the entire form */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label,
+form input,
+form textarea {
+    margin-bottom: 10px; /* Add margin between form elements */
+}
+
+form input,
+form textarea {
+    padding: 8px; /* Add padding to form elements */
+}

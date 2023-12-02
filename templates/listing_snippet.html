@@ -1,0 +1,17 @@
+{% for listing in listings %}
+    <a style="display:block" href="{{ url_for('productListing', product_id=listing.id) }}">
+        <div class="listing">
+            {% if listing.image %}
+                <img src="{{ url_for('static', filename=listing.image.decode('utf-8').replace('static/', '')) }}"
+                     alt="Listing Image" style="max-width: 300px; max-height: 300px;">
+            {% endif %}
+            <div>
+                <h3>{{ listing.title }}</h3>
+                <p>{{ listing.description }}</p>
+                <p>Starting Price: ${{ listing.starting_price }}</p>
+                <p>Auction Duration: {{ listing.auction_duration }} days</p>
+                <p>Category: {{ listing.category|capitalize }}</p>
+            </div>
+        </div>
+    </a>
+{% endfor %}

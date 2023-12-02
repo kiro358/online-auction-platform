@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congratulations!</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+
+            background: rgb(255, 255, 255);
+            background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(223, 223, 255, 1) 29%, rgba(232, 251, 255, 1) 90%);
+        }
+
+        }
+
+        .congrats-container {
+            text-align: center;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #3bb143;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #3bb143;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2a9022;
+        }
+    </style>
+</head>
+<body>
+<div class="congrats-container">
+    <h1 class="won">Congratulations!</h1>
+    <p class="won">You have won the Auction!</p>
+    <button onclick="redirectToPayment()" class="won">Process Payment</button>
+</div>
+
+<script>
+    function redirectToPayment() {
+        // Assuming you have a route named 'payment' for the payment screen
+        window.location.href = "{{ url_for('payment') }}";
+    }
+</script>
+
+</body>
+</html>

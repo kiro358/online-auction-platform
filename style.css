@@ -1,0 +1,318 @@
+.login-page {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.login-page .desktop-wrapper {
+  background-color: #ffffff;
+  width: 1440px;
+  height: 900px;
+}
+
+.login-page .desktop {
+  position: relative;
+  height: 900px;
+  background-color: #ffffff;
+}
+
+.login-page .forms-inputs {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: absolute;
+  top: 460px;
+  left: 1112px;
+  border-radius: 4px;
+}
+
+.login-page .base-forms-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 0px 8px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.login-page .label {
+  position: relative;
+  align-self: stretch;
+  margin-top: -1px;
+  font-family: "SF Pro Display", Helvetica;
+  font-weight: 500;
+  color: var(--text01-body);
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 24px;
+}
+
+.login-page .base-forms-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+  background-color: var(--global09-white);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid;
+  border-color: var(--componentsformsinput-border);
+}
+
+.login-page .text-cursor {
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+}
+
+.login-page .overlap-group {
+  position: absolute;
+  width: 255px;
+  height: 61px;
+  top: 540px;
+  left: 1112px;
+  border-radius: 4px;
+}
+
+.login-page .div {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 4px;
+}
+
+.login-page .text {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  font-family: "Stint Ultra Expanded", Helvetica;
+  font-weight: 400;
+  color: var(--text02-muted);
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 21px;
+  white-space: nowrap;
+}
+
+.login-page .eye {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  top: 35px;
+  left: 225px;
+}
+
+.login-page .buttons {
+  display: flex;
+  flex-direction: column;
+  width: 255px;
+  align-items: flex-start;
+  position: absolute;
+  top: 625px;
+  left: 1112px;
+  all: unset;
+  box-sizing: border-box;
+}
+
+.login-page .base {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+  background-color: var(--primary-3);
+  border-radius: 4px;
+}
+
+.login-page .containter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.login-page .text-wrapper {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  font-family: "Stint Ultra Expanded", Helvetica;
+  font-weight: 400;
+  color: var(--global09-white);
+  font-size: 14px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: 21px;
+  white-space: nowrap;
+}
+
+.login-page .base-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 255px;
+  align-items: flex-start;
+  position: absolute;
+  top: 700px;
+  left: 1112px;
+  all: unset;
+  box-sizing: border-box;
+}
+
+.login-page .navbar {
+  display: flex;
+  width: 1440px;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.login-page .brand-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+  background-color: var(--primary-2);
+}
+
+.login-page .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px 8px 0px;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.login-page .navbar-2 {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  font-family: "Stint Ultra Expanded", Helvetica;
+  font-weight: 400;
+  color: #eeeeee;
+  font-size: 32px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.login-page .text-wrapper-2 {
+  position: absolute;
+  width: 229px;
+  top: 389px;
+  left: 1120px;
+  font-family: "Stint Ultra Expanded", Helvetica;
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 25px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: 30px;
+}
+
+.login-page .rectangle {
+  position: absolute;
+  width: 1026px;
+  height: 844px;
+  top: 56px;
+  left: 0;
+  object-fit: cover;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 255px;
+  position: absolute;
+  left: 1112px;
+  top: 650px;
+}
+
+.button-container2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 255px;
+  position: absolute;
+  left: 1112px;
+  top: 720px;
+}
+
+.button-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 0;
+  flex-shrink: 0;
+  padding: 2px;
+  border-radius: 5px;
+  background-color: #bc3908;
+}
+
+.button-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 0;
+  flex-shrink: 0;
+  position: relative;
+  gap: 1;
+}
+
+.login-button {
+  flex-grow: 0;
+  flex-shrink: 0;
+  font-family: "SF Pro Display-Regular", Helvetica;
+  font-size: 14px;
+  text-align: center;
+  color: #fff;
+  background-color: #bc3908;
+  border: none;
+  padding: 5px 105px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.signup-button {
+  display: inline-block;
+  font-family: "SF Pro Display", Helvetica;
+  font-size: 13px;
+  text-align: center;
+  color: #fff;
+  background-color: #bc3908;
+  border: none;
+  padding: 5px 100px; /* Adjust the padding to make the button wider */
+  border-radius: 3px;
+  cursor: pointer;
+}
+

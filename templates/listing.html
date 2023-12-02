@@ -1,0 +1,304 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: rgb(255, 255, 255);
+            background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(223, 223, 255, 1) 29%, rgba(232, 251, 255, 1) 90%);
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            overflow: hidden;
+            display: flex;
+            justify-content: left;
+            padding: 30px;
+            color: white;
+            z-index: 1;
+        }
+
+        .alink {
+            color: white;
+        }
+
+        a:hover {
+            color: black;
+            background-color: mintcream;
+        }
+
+        .category-table {
+            max-width: 300px;
+            height: 100px; /* Full height of the viewport */
+            position: fixed;
+            top: 12%;
+            left: 55%; /* Center the form horizontally */
+            transform: translateX(-50%); /* Center the form horizontally */
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 1px;
+            background: linear-gradient(to right, cornsilk, mintcream);
+            animation: gradientChange 1ms infinite alternate;
+            z-index: 1;
+            transition: top 0.5s ease-in-out; /* Added transition effect for smooth sliding */
+
+        }
+
+        .category-table label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .category-table select {
+            width: calc(100% - 20px); /* Adjusted width to consider padding */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background-color: #fff;
+            margin-top: 5px; /* Added margin for spacing between label and select */
+        }
+
+        .dropdown-form {
+            max-width: 300px;
+            height: 100px; /* Full height of the viewport */
+            position: fixed;
+            top: 12%;
+            left: 50%; /* Center the form horizontally */
+            transform: translateX(-50%); /* Center the form horizontally */
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 1px;
+            background: linear-gradient(to right, cornsilk, mintcream);
+            animation: gradientChange 1ms infinite alternate;
+            z-index: 1;
+            transition: top 0.5s ease-in-out; /* Added transition effect for smooth sliding */
+        }
+
+        .dropdown-form,
+        .dropdown-form:hover {
+            top: 12%; /* Adjusted top position */
+        }
+
+        @keyframes gradientChange {
+            from {
+                background-position: 0%;
+            }
+            to {
+                background-position: 100%;
+            }
+        }
+
+        .scrollable-container {
+            max-height: 60vh; /* Adjust the max-height as needed */
+            overflow-y: auto;
+            position: fixed;
+            top: 28%; /* Adjusted top position */
+            width: 100%;
+            z-index: 0;
+
+        }
+
+        .grid-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .grid-container:hover {
+            transform: scale(1); /* Added scaling on hover */
+        }
+
+        .listing-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .listing {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: column; /* Keep this line only if you want each listing to be a column */
+            padding: 20px;
+            background-color: #fff7f7;
+            border-radius: 2px;
+            transition: background-color 0.5s;
+            border: 1px solid #ccc;
+            width: 275px; /* Set a fixed width for each listing */
+        }
+
+        .listing:hover {
+            background-color: mintcream;
+            transform: scale(1.02);
+        }
+
+        .listing img {
+            width: 100%; /* Make the image take up 100% of its container width */
+            height: 150px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .listing-details {
+            text-align: center;
+            flex-grow: 1; /* Allow the details to grow and take up available space */
+        }
+
+        .listing div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .createListing {
+            padding: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form label,
+        form input,
+        form textarea,
+        form select {
+            margin-bottom: 10px;
+        }
+
+        form input,
+        form textarea,
+        form select {
+            padding: 8px;
+        }
+
+
+        @media only screen and (max-width: 768px) {
+            .navbar {
+                padding: 10px;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .navbar h1 {
+                font-size: 18px;
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+
+            .navbar a {
+                margin: 5px 0;
+            }
+
+            .user-info {
+                margin-top: 10px;
+                margin-right: 0;
+            }
+
+            .dropdown-form {
+                max-width: 100%;
+                width: 100%;
+                padding: 15px;
+                left: 0;
+                transform: none;
+                margin-top: 10px;
+                border-radius: 0;
+            }
+
+            .scrollable-container {
+                top: 80px; /* Adjusted top position */
+            }
+        }
+
+        .category-row {
+            margin-top: 20px; /* Adjust the margin between category rows */
+        }
+    </style>
+
+    <div class="dropdown-form">
+        <form method="post">
+            <label for="selectOption">Sort by:</label>
+            <select id="selectOption" name="selectOption">
+                <option value="Option 1">Starting Price: Lowest to Highest</option>
+                <option value="Option 2">Starting Price: Highest to Lowest</option>
+                <option value="Option 3">Auction Duration: Shortest to Longest</option>
+                <option value="Option 4">Auction Duration: Longest to Shortest</option>
+                <option value="Option 5">Sort All Listings By Category</option>
+
+            </select>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div class="scrollable-container">
+        <div class="grid-container" id="listing-container">
+            {% if listings %}
+                {% for listing in listings %}
+                    <a style="display:block" href="{{ url_for('productListing', product_id=listing.id) }}">
+                        <div class="listing">
+                            {% if listing.image %}
+                                <img src="{{ url_for('static', filename=listing.image.decode('utf-8').replace('static/', '')) }}"
+                                     alt="Listing Image" style="max-width: 300px; max-height: 300px;">
+                            {% endif %}
+                            <div>
+                                <h3>{{ listing.title }}</h3>
+                                <p>{{ listing.description }}</p>
+                                <p>Starting Price: ${{ listing.starting_price }}</p>
+                                <p class="time-left" data-end-time="{{ listing.end_time }}">{{ listing.end_time | calculate_timeleft(current_datetime) }}</p>
+                                <p>Category: {{ listing.category|capitalize }}</p>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <p>No listings found.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+    function updateTimer() {
+        // Get all elements with the class 'time-left'
+        var timeLeftElements = document.getElementsByClassName('time-left');
+        
+        // Loop through each element and update the time
+        for (var i = 0; i < timeLeftElements.length; i++) {
+            var currentTime = new Date();
+            var endTime = new Date(timeLeftElements[i].getAttribute('data-end-time'));
+            var timeLeft = Math.max(endTime - currentTime, 0); // Ensure time doesn't go negative
+            
+            var days = Math.floor(timeLeft / (24 * 60 * 60 * 1000));
+            var hours = Math.floor((timeLeft % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+            var minutes = Math.floor((timeLeft % (60 * 60 * 1000)) / (60 * 1000));
+            var seconds = Math.floor((timeLeft % (60 * 1000)) / 1000);
+            
+            // Update the time on the element
+            if (timeLeft==0){
+                timeLeftElements[i].textContent = 'The Auction is Over'
+            }
+            
+            else if (days!=0){
+                timeLeftElements[i].textContent = `Time Left: ${days}D ${hours}h ${minutes}m ${seconds}s`;
+            }
+                 
+            else if (hours!=0){
+                timeLeftElements[i].textContent = `Time Left: ${hours}h ${minutes}m ${seconds}s`;
+            }
+            else{
+                timeLeftElements[i].textContent = `Time Left: ${minutes}m ${seconds}s`;
+            }  
+        }
+    }
+    updateTimer();
+    setInterval(updateTimer, 1000);
+    </script>
+
+{% endblock %}

@@ -1,2 +1,2 @@
-# online-auction-platform
-CPS 714 Project
+# Online Auction Platform
+CPS714 project

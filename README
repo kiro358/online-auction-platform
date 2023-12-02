@@ -1,0 +1,13 @@
+Install the following using cmd
+
+pip install Flask
+pip install Flask-admin
+pip install peewee
+pip install wtf-peewee
+pip install Flask-mail
+pip install postmarker
+
+open the project directory using cmd and write the following command:
+run auctionApp.py
+Control+C to cancel. Take a note of the server address, copy and paste in browser to access
+http://127.0.0.1:5000(This can change)/admin/
