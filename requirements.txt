@@ -4,4 +4,4 @@ peewee==3.14.4
 Werkzeug==2.0.2
 Flask-Mail==0.9.1
 postmarker==0.17.0
-playhouse==3.0.2
+playhouse==2.0.0
