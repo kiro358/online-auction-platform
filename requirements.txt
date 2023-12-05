@@ -1,5 +1,5 @@
 Flask==2.0.2
-Flask-Admin==1.5.11
+Flask-Admin==1.6.0
 peewee==3.14.4
 Werkzeug==2.0.2
 Flask-Mail==0.9.1
